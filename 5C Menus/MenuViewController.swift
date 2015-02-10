@@ -53,11 +53,11 @@ class MenuViewController : UIViewController, UITableViewDelegate, UITableViewDat
         var cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "menuItem")
         
         if(self.segmentedControlValues[self.mealSelector.selectedSegmentIndex].count > indexPath.item) {
-            cell.textLabel.text = (self.segmentedControlValues[self.mealSelector.selectedSegmentIndex][indexPath.item] as String)
+            cell.textLabel!.text = (self.segmentedControlValues[self.mealSelector.selectedSegmentIndex][indexPath.item] as String)
         } else {
-            cell.textLabel.text = ""
+            cell.textLabel!.text = ""
         }
-        cell.textLabel.textColor = self.textColor!
+        cell.textLabel!.textColor = self.textColor!
         
         return cell
     }

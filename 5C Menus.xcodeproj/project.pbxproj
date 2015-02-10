@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9016B8A1A5F66E100533FB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9016B891A5F66E100533FB5 /* Images.xcassets */; };
 		D914ADF119DF046000EE678F /* ParseHTMLMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914ADF019DF046000EE678F /* ParseHTMLMenus.swift */; };
 		D9862FAF19DB8D6300934280 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9862FAE19DB8D6300934280 /* AppDelegate.swift */; };
 		D9862FB219DB8D6300934280 /* _C_Menus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9862FB019DB8D6300934280 /* _C_Menus.xcdatamodeld */; };
 		D9862FB419DB8D6300934280 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9862FB319DB8D6300934280 /* ContainerViewController.swift */; };
 		D9862FB719DB8D6300934280 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9862FB519DB8D6300934280 /* Main.storyboard */; };
-		D9862FB919DB8D6300934280 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9862FB819DB8D6300934280 /* Images.xcassets */; };
 		D9862FBC19DB8D6300934280 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9862FBA19DB8D6300934280 /* LaunchScreen.xib */; };
 		D9862FC819DB8D6300934280 /* _C_MenusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9862FC719DB8D6300934280 /* _C_MenusTests.swift */; };
 		D9862FD419DB8F8200934280 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9862FD319DB8F8200934280 /* MenuViewController.swift */; };
@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D9016B891A5F66E100533FB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D914ADF019DF046000EE678F /* ParseHTMLMenus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHTMLMenus.swift; sourceTree = "<group>"; };
 		D9862FA919DB8D6300934280 /* 5C Menus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5C Menus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9862FAD19DB8D6300934280 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		D9862FB119DB8D6300934280 /* _C_Menus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = _C_Menus.xcdatamodel; sourceTree = "<group>"; };
 		D9862FB319DB8D6300934280 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		D9862FB619DB8D6300934280 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D9862FB819DB8D6300934280 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D9862FBB19DB8D6300934280 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D9862FC119DB8D6300934280 /* 5C MenusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "5C MenusTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9862FC619DB8D6300934280 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 				D914ADF019DF046000EE678F /* ParseHTMLMenus.swift */,
 				D9862FB519DB8D6300934280 /* Main.storyboard */,
 				D9862FD719DBB1DC00934280 /* MenuViewController.xib */,
-				D9862FB819DB8D6300934280 /* Images.xcassets */,
+				D9016B891A5F66E100533FB5 /* Images.xcassets */,
 				D9862FBA19DB8D6300934280 /* LaunchScreen.xib */,
 				D9862FB019DB8D6300934280 /* _C_Menus.xcdatamodeld */,
 				D9862FAC19DB8D6300934280 /* Supporting Files */,
@@ -209,8 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9862FB719DB8D6300934280 /* Main.storyboard in Resources */,
+				D9016B8A1A5F66E100533FB5 /* Images.xcassets in Resources */,
 				D9862FBC19DB8D6300934280 /* LaunchScreen.xib in Resources */,
-				D9862FB919DB8D6300934280 /* Images.xcassets in Resources */,
 				D9862FD819DBB1DC00934280 /* MenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,12 +359,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "5C Menus/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -372,12 +375,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "5C Menus/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

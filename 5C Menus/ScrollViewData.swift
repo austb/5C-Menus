@@ -18,7 +18,11 @@ class ScrollViewData: NSObject {
     }
     
     override init() {
-        pageIndex = 0
+        if(NSUserDefaults.standardUserDefaults().valueForKey("current_dining_hall") == nil) {
+            pageIndex = 0
+        } else {
+            pageIndex = (NSUserDefaults.standardUserDefaults().valueForKey("current_dining_hall") as NSNumber)
+        }
         pageTitles = ["Frank", "Frary", "Collins", "Scripps", "Pitzer", "Harvey Mudd"]
     }
 }

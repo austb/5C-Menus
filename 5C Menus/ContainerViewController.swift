@@ -13,13 +13,101 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
     @IBOutlet var scrollView: UIScrollView?
     @IBOutlet weak var navBarTitleLabel: UILabel!
     
-    var scrollDataManager = ScrollViewData()
-    var menuDataManager = ParseHTMLMenus()
-    var oldScrollViewY : CGFloat!
+    var scrollDataManager : ScrollViewData!
+    var menuDataManager : ParseHTMLMenus!
+    var viewDidLoadHasRun : Bool! = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "resumedFromBackground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        if (!1.isEqual(NSUserDefaults.standardUserDefaults().objectForKey("first_use_of_app"))) {
+            self.firstUseOfApp()
+        }
+        
+        self.scrollDataManager = ScrollViewData()
+        
+        self.initializeMenus()
+            
+        // Move scroll view to correct position on screen
+        self.setScrollViewPosition()
+        
+        // Update Screen Components
+        self.updateScreen()
+        
+        self.viewDidLoadHasRun = true
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func resumedFromBackground() {
+        if (self.viewDidLoadHasRun == true) {
+            self.viewDidLoadHasRun = false
+        } else {
+            self.initializeMenus()
+            self.updateScreen()
+        }
+    }
+    
+    func firstUseOfApp() {
+        // Mark tutorial as seen
+        NSUserDefaults.standardUserDefaults().setInteger(1, forKey: "first_use_of_app")
+        // Set current menu to first dining hall
+        NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "current_dining_hall")
+        // Set current menu index in array
+        NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "current_menu_index")
+        
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        // Show tutorial
+    }
+    
+    func initializeMenus() {
+        self.getMenus()
+        
+        self.initialMenuSetup()
+    }
+    
+    func getMenus() {
+        // Display activity indicator for retrieval and parsing of menu data
+        
+        var loadingView: UIView = UIView()
+        loadingView.frame = CGRectMake(0, 0, 80, 80)
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor(red: (68/250), green: (68/250), blue: (68/250), alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        indicator.center = CGPointMake(loadingView.frame.size.width / 2,
+            loadingView.frame.size.height / 2);
+        loadingView.addSubview(indicator)
+        self.view.addSubview(loadingView)
+        indicator.startAnimating()
+        
+        self.menuDataManager = ParseHTMLMenus()
+        
+        // remove activity indicator when parsing is complete
+        indicator.stopAnimating()
+        loadingView.removeFromSuperview()
+        
+        // Handle error in menuDataManager
+        if !self.menuDataManager.didURLRetrievalSucceed {
+            
+            var alertMessage = UIAlertView(title: "Error", message: "Failed to retreive menu data. Please check your Internet connection.", delegate: self, cancelButtonTitle: "OK")
+            alertMessage.show()
+            
+            
+            //            UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            
+        }
+    }
+    
+    func initialMenuSetup() {
         // self.scrollView?.frame = UIScreen.mainScreen().bounds
         
         // Set up our menus
@@ -30,7 +118,7 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
         var PitzerMenuViewController : MenuViewController = MenuViewController(nibName: "MenuViewController", bundle: nil)
         var MuddMenuViewController : MenuViewController = MenuViewController(nibName: "MenuViewController", bundle: nil)
         
-        // TODO switch this to call an initialization function for the various 
+        // TODO switch this to call an initialization function for the various
         FrankMenuViewController.initializeFrank(self.menuDataManager.arrayOfMenuItems[0] as NSArray)
         FraryMenuViewController.initializeFrary(self.menuDataManager.arrayOfMenuItems[1] as NSArray)
         CollinsMenuViewController.initializeCollins(self.menuDataManager.arrayOfMenuItems[2] as NSArray)
@@ -66,6 +154,8 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
         
         // Set up frames of view controllers to align with eachother
         var screenFrame : CGRect = UIScreen.mainScreen().bounds
+        self.scrollView?.frame = screenFrame
+        NSLog("%f", self.scrollView!.frame.width)
         screenFrame.size.height = screenFrame.height
         
         screenFrame.origin.x = screenFrame.width
@@ -85,18 +175,16 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
         
         // Set size of scroll view
         var scrollWidth = 6 * screenFrame.width
-//        var scrollHeight = self.view.frame.size.height
+        //        var scrollHeight = self.view.frame.size.height
         self.scrollView!.contentSize = CGSizeMake(scrollWidth, self.scrollView!.contentSize.height)
         self.scrollView?.delegate = self
-        self.oldScrollViewY = self.scrollView?.contentOffset.y
-        
-        // Update Screen Components
-        self.updateScreen()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func setScrollViewPosition() {
+        let pageWidth = UIScreen.mainScreen().bounds.width
+        let contentOffset = (CGFloat(self.scrollDataManager.pageIndex) * pageWidth) as CGFloat
+        
+        self.scrollView?.setContentOffset(CGPoint(x: contentOffset, y: 0.0), animated: false)
     }
     
     func updateScreen() {
@@ -141,10 +229,12 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
 
     func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
-        
-        let pageWidth = scrollView.frame.size.width
+        let pageWidth = UIScreen.mainScreen().bounds.width
         let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
         scrollDataManager.pageIndex = page
+        
+        NSUserDefaults.standardUserDefaults().setInteger(page, forKey: "current_dining_hall")
+        NSUserDefaults.standardUserDefaults().synchronize()
         
         self.updateScreen()
     }
